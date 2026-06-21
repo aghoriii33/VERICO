@@ -338,7 +338,7 @@ def train_risk_classifier():
     # Simple Pipeline: TFIDF + Logistic Regression (multi_class='multinomial')
     model = Pipeline([
         ('tfidf', TfidfVectorizer(ngram_range=(1, 2), lowercase=True, stop_words='english')),
-        ('clf', LogisticRegression(C=5.0, solver='liblinear', random_state=42))
+        ('clf', LogisticRegression(C=5.0, random_state=42))
     ])
     
     model.fit(X, y)
