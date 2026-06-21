@@ -1,4 +1,3 @@
-import React from 'react';
 import { FileText, Trash2, Calendar, File } from 'lucide-react';
 
 export default function DocumentCard({ doc, isSelected, onSelect, onDelete }) {
@@ -19,7 +18,7 @@ export default function DocumentCard({ doc, isSelected, onSelect, onDelete }) {
     try {
       const date = new Date(dateStr);
       return date.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
-    } catch (e) {
+    } catch {
       return dateStr;
     }
   };

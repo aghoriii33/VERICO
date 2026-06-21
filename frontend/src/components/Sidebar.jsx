@@ -1,4 +1,3 @@
-import React from 'react';
 import { LayoutDashboard, MessageSquare, BarChart3, ShieldCheck } from 'lucide-react';
 
 export default function Sidebar({ currentTab, setCurrentTab }) {

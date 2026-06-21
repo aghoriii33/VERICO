@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Send, FileText, CheckSquare, Square, ChevronDown, ChevronUp } from 'lucide-react';
+import { useState, useEffect, useRef } from 'react';
+import { Send, CheckSquare, Square, ChevronDown, ChevronUp } from 'lucide-react';
 import { api } from '../api/client';
 
 export default function ChatPanel({ documents }) {
@@ -18,9 +18,11 @@ export default function ChatPanel({ documents }) {
   // Initialize selected docs when list changes
   useEffect(() => {
     if (documents.length > 0 && selectedDocIds.length === 0) {
-      setSelectedDocIds(documents.map(d => d.id));
+      Promise.resolve().then(() => {
+        setSelectedDocIds(documents.map(d => d.id));
+      });
     }
-  }, [documents]);
+  }, [documents, selectedDocIds.length]);
 
   // Scroll to bottom of chat
   useEffect(() => {
@@ -55,7 +57,7 @@ export default function ChatPanel({ documents }) {
         start: res.start,
         end: res.end
       }]);
-    } catch (e) {
+    } catch {
       setMessages(prev => [...prev, {
         sender: 'assistant',
         text: 'Sorry, I encountered an error searching for that answer. Please try again.',

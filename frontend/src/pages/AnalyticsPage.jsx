@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { ShieldAlert, AlertOctagon, Files, CheckCircle2, Shield } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { ShieldAlert, AlertOctagon, Files, CheckCircle2 } from 'lucide-react';
 import { api } from '../api/client';
 
 export default function AnalyticsPage({ documents }) {
@@ -7,20 +7,27 @@ export default function AnalyticsPage({ documents }) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    fetchRisks();
+    let active = true;
+    Promise.resolve().then(() => {
+      if (active) setIsLoading(true);
+    });
+    api.getAllRisks()
+      .then(risks => {
+        if (active) {
+          setAllRisks(risks);
+          setIsLoading(false);
+        }
+      })
+      .catch(e => {
+        console.error("Failed to load risks", e);
+        if (active) {
+          setIsLoading(false);
+        }
+      });
+    return () => {
+      active = false;
+    };
   }, [documents]);
-
-  const fetchRisks = async () => {
-    setIsLoading(true);
-    try {
-      const risks = await api.getAllRisks();
-      setAllRisks(risks);
-    } catch (e) {
-      console.error("Failed to load risks", e);
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   // 1. Calculate metrics
   const totalDocs = documents.length;

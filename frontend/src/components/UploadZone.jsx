@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import { useState, useRef } from 'react';
 import { UploadCloud } from 'lucide-react';
 
 export default function UploadZone({ onUpload, isUploading }) {
@@ -17,9 +17,9 @@ export default function UploadZone({ onUpload, isUploading }) {
   const handleDrop = (e) => {
     e.preventDefault();
     setIsDragging(false);
-    
+
     if (isUploading) return;
-    
+
     const files = e.dataTransfer.files;
     if (files.length > 0) {
       onUpload(files);
@@ -28,7 +28,7 @@ export default function UploadZone({ onUpload, isUploading }) {
 
   const handleFileChange = (e) => {
     if (isUploading) return;
-    
+
     const files = e.target.files;
     if (files.length > 0) {
       onUpload(files);
@@ -61,8 +61,8 @@ export default function UploadZone({ onUpload, isUploading }) {
         {isUploading ? 'Compliance scanning in progress...' : 'Upload Compliance Documents'}
       </h3>
       <p className="upload-desc">
-        {isUploading 
-          ? 'Extracting text and running Rule+ML risk checks...' 
+        {isUploading
+          ? 'Extracting text and running Rule+ML risk checks...'
           : 'Drag & drop multiple PDFs or click to browse'}
       </p>
     </div>

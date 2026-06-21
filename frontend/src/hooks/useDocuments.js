@@ -44,7 +44,24 @@ export function useDocuments() {
   };
 
   useEffect(() => {
-    fetchDocs();
+    let active = true;
+    api.getDocuments()
+      .then(data => {
+        if (active) {
+          setDocuments(data);
+          setError(null);
+          setIsLoading(false);
+        }
+      })
+      .catch(e => {
+        if (active) {
+          setError(e.message);
+          setIsLoading(false);
+        }
+      });
+    return () => {
+      active = false;
+    };
   }, []);
 
   return {

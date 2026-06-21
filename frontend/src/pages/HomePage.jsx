@@ -1,23 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { ShieldAlert, Info, AlertTriangle, CheckCircle, FileText } from 'lucide-react';
 import UploadZone from '../components/UploadZone';
 import DocumentCard from '../components/DocumentCard';
 import { api } from '../api/client';
 
-export default function HomePage({ documents, setDocuments, fetchDocs }) {
+export default function HomePage({ documents, fetchDocs }) {
   const [selectedDoc, setSelectedDoc] = useState(null);
   const [selectedDocDetails, setSelectedDocDetails] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
   const [isLoadingDetails, setIsLoadingDetails] = useState(false);
-
-  // Auto-refresh details when selected doc changes or is updated
-  useEffect(() => {
-    if (selectedDoc) {
-      loadDocDetails(selectedDoc.id);
-    } else {
-      setSelectedDocDetails(null);
-    }
-  }, [selectedDoc]);
 
   const loadDocDetails = async (id) => {
     setIsLoadingDetails(true);
@@ -28,6 +19,15 @@ export default function HomePage({ documents, setDocuments, fetchDocs }) {
       console.error("Failed to load document details", e);
     } finally {
       setIsLoadingDetails(false);
+    }
+  };
+
+  const handleSelectDoc = (doc) => {
+    setSelectedDoc(doc);
+    if (doc) {
+      loadDocDetails(doc.id);
+    } else {
+      setSelectedDocDetails(null);
     }
   };
 
@@ -47,7 +47,7 @@ export default function HomePage({ documents, setDocuments, fetchDocs }) {
     try {
       await api.deleteDocument(id);
       if (selectedDoc?.id === id) {
-        setSelectedDoc(null);
+        handleSelectDoc(null);
       }
       await fetchDocs();
     } catch (e) {
@@ -96,7 +96,7 @@ export default function HomePage({ documents, setDocuments, fetchDocs }) {
                   key={doc.id}
                   doc={doc}
                   isSelected={selectedDoc?.id === doc.id}
-                  onSelect={setSelectedDoc}
+                  onSelect={handleSelectDoc}
                   onDelete={handleDelete}
                 />
               ))

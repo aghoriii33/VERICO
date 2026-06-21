@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Sidebar from './components/Sidebar';
 import HomePage from './pages/HomePage';
 import ChatPanel from './components/ChatPanel';
@@ -22,7 +22,23 @@ export default function App() {
   };
 
   useEffect(() => {
-    fetchDocs();
+    let active = true;
+    api.getDocuments()
+      .then(data => {
+        if (active) {
+          setDocuments(data);
+          setIsLoading(false);
+        }
+      })
+      .catch(e => {
+        console.error("Failed to load documents list", e);
+        if (active) {
+          setIsLoading(false);
+        }
+      });
+    return () => {
+      active = false;
+    };
   }, []);
 
   const renderActiveView = () => {
@@ -31,7 +47,6 @@ export default function App() {
         return (
           <HomePage 
             documents={documents} 
-            setDocuments={setDocuments} 
             fetchDocs={fetchDocs} 
           />
         );
@@ -43,7 +58,6 @@ export default function App() {
         return (
           <HomePage 
             documents={documents} 
-            setDocuments={setDocuments} 
             fetchDocs={fetchDocs} 
           />
         );
