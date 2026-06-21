@@ -1,0 +1,52 @@
+rules:
+- category: Liability
+  description: Flags clauses that expose the company to unlimited financial or legal
+    damages.
+  id: unlimited_liability
+  keywords:
+  - unlimited liability
+  - shall not be limited
+  - liability is unlimited
+  - no cap on liability
+  - indemnify without limit
+  - consequential damages without limitation
+  name: Unlimited Liability Clause
+  severity: High
+- category: Term
+  description: Flags clauses that cause the contract to auto-renew unless active cancelation
+    occurs.
+  id: auto_renewal
+  keywords:
+  - auto-renew
+  - automatically renew
+  - tacit renewal
+  - automatic extension
+  - renew automatically
+  - automatic roll-over
+  name: Automatic Contract Renewal
+  severity: Medium
+- category: Compliance
+  description: Flags clauses that deny the ability to inspect the vendor's records
+    or facilities for compliance.
+  id: no_audit
+  keywords:
+  - no audit rights
+  - audit is prohibited
+  - shall not audit
+  - waives audit rights
+  - restricted access to audit
+  - no inspection of facilities
+  name: No Audit Rights
+  severity: High
+- category: Compliance
+  description: Flags clauses transfering IP rights of custom-built software or assets
+    back to the vendor.
+  id: ip_ownership
+  keywords:
+  - waives all rights
+  - transfer all intellectual property
+  - assigns intellectual property
+  - sole ownership of vendor
+  - retain all intellectual property rights
+  name: Intellectual Property Transfer
+  severity: Medium

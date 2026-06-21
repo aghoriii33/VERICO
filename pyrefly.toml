@@ -1,0 +1,4 @@
+# Pyrefly Configuration for VERICO
+site-package-path = [
+    "backend/.venv/Lib/site-packages"
+]
