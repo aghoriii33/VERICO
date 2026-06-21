@@ -1,3 +1,4 @@
+# pyrefly: ignore [missing-import]
 import os
 import sys
 from pathlib import Path
@@ -5,6 +6,7 @@ from pathlib import Path
 # Add backend directory to path
 sys.path.append(str(Path(__file__).resolve().parent))
 
+# pyrefly: ignore [missing-import]
 from app.database import Base, engine, SessionLocal
 from app.models.db_models import Document, DocumentChunk, RiskMatch
 from app.config import DOCUMENTS_DIR

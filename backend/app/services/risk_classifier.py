@@ -1,7 +1,9 @@
+# pyrefly: ignore [missing-import]
 import yaml
 import pickle
 import os
 from typing import List, Dict, Any
+# pyrefly: ignore [missing-import]
 from app.config import RISK_RULES_PATH, RISK_CLASSIFIER_PATH
 
 class RiskClassifier:
@@ -15,7 +17,10 @@ class RiskClassifier:
                 try:
                     with open(RISK_RULES_PATH, 'r') as f:
                         data = yaml.safe_load(f)
-                        cls._rules = data.get("rules", [])
+                        if isinstance(data, dict):
+                            cls._rules = data.get("rules", [])
+                        else:
+                            cls._rules = []
                         print(f"Loaded {len(cls._rules)} rules from {RISK_RULES_PATH}.")
                 except Exception as e:
                     print(f"Failed to load rules: {e}")
